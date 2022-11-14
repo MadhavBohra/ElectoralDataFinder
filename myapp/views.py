@@ -2,7 +2,9 @@ from django.shortcuts import render
 import requests
 from PIL import Image
 from ast import literal_eval
-
+import json
+from django.http import JsonResponse
+from . models import RegisteredClient
 
 # Create your views here.
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
@@ -43,11 +45,24 @@ def index(request):
         results = session.post("https://electoralsearch.in/Home/searchVoter",json=payload)
         results = results.text
         
+        json_result = json.loads(results)
+        final_dict = json_result['response']['docs'][0]
+        epic_no = final_dict['epic_no']
+        st_name = final_dict['st_name']
+        st_code = final_dict['st_code']
+        dist_name = final_dict['dist_name']
+        dist_no = final_dict['dist_no']
+        ac_name = final_dict['ac_name']
+        ac_no = final_dict['ac_no']
+        part_name = final_dict['part_name']
+        part_no = final_dict['part_name']
+        name = final_dict['name']
+        age = final_dict['age']
+        gender = final_dict['gender']
+        rln_name = final_dict['rln_name']
+        rln_type = final_dict['rln_type']
 
-        file = open('templates/output.txt','w',encoding='utf-8')
-        file.write(results)
-        file.close()
-        return render(request,'output.txt')
+        return JsonResponse(final_dict)
 
     results = session.get("https://electoralsearch.in/Home/GetCaptcha?image=true")
     file = open('test.jfif','wb')
