@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'ElectoralDataFinder'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EC2C42E6DFBF44F497A37192C097D049 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_39C9F07AFAF34DCFA49A652FD79BBEE4 }}
